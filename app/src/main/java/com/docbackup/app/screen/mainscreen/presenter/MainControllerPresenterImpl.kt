@@ -22,10 +22,6 @@ import java.util.*
 class MainControllerPresenterImpl(view: MainControllerView, model: MainControllerModel, dataHolder: MainControllerDataHolder, arguments: Arguments, abs: PAbs) :
         BasePresenterImpl<MainControllerView, MainControllerModel, MainControllerDataHolder, Arguments>(view, model, dataHolder, arguments, abs), MainControllerPresenter {
 
-    override fun buttonClicked() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun okPressed() {
         abs.getToastManager().showToast("Dialog Ok Pressed")
     }
