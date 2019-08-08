@@ -1,116 +1,189 @@
 package com.docbackup.app.service
 
 import android.os.Bundle
-import com.bluelinelabs.conductor.Controller
-import com.bluelinelabs.conductor.ControllerChangeHandler
-import com.bluelinelabs.conductor.Router
-import com.bluelinelabs.conductor.RouterTransaction
-import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import com.docbackup.app.abs.App
+import com.docbackup.app.abs.HandleNavigation
+import com.docbackup.app.abs.MySupportFragmentNavigator
 import com.docbackup.app.abs.Screen
 import com.docbackup.app.abs.dialog.DialogControllerStub
 import com.docbackup.app.abs.dialog.presenter.DialogArguments
 import com.docbackup.app.abs.presenter.Arguments
 import com.docbackup.app.dialog.message.MessageDialogController
 import com.docbackup.app.screen.mainscreen.MainController
-import com.docbackup.app.screen.testscreen.TestControlle
+import com.docbackup.app.screen.testscreen.TestController
+import ru.terrakok.cicerone.Navigator
+import ru.terrakok.cicerone.NavigatorHolder
+import ru.terrakok.cicerone.Router
 import java.io.Serializable
 import java.util.*
 
 class Navigator : Serializable {
 
-    private val router: Router;
-    private val dialogRouter: Router;
+    private val screenRouter: Router
+    private val dialogRouter: Router
+    private val ciceroneNavigator: Navigator
+    private val ciceroneDialogNavigator: Navigator
+    private val screenFragmentManager: FragmentManager
+    private val dialogFragmentManager: FragmentManager
 
-    constructor(router: Router, dialogRouter: Router) {
-        this.router = router;
-        this.dialogRouter = dialogRouter;
+    constructor(router: Router, dialogRouter: Router, screenFragmentManager: FragmentManager, dialogFragmentManager: FragmentManager, screensContainer: Int, dialogsContainer: Int) {
+        this.screenRouter = router
+        this.dialogRouter = dialogRouter
+        this.screenFragmentManager = screenFragmentManager
+        this.dialogFragmentManager = dialogFragmentManager
 
-        if (!router.hasRootController()) {
-            router.setRoot(createScreenTransaction(getRootController(Bundle()), Arguments()));
+        ciceroneNavigator = object : MySupportFragmentNavigator(screenFragmentManager, screensContainer) {
+            override fun createFragment(screenKey: String?, data: Any?): Fragment {
+                var controller: Fragment = getRootController(Bundle())
+                val arguments = data as Arguments
+
+                when (screenKey?.toInt()) {
+                    Screen.SCREEN_MAIN -> {
+                        controller = MainController()
+                    }
+                    Screen.SCREEN_TEST -> {
+                        controller = TestController()
+                    }
+                }
+
+                arguments.controllerTag = screenKey ?: ""
+                controller?.arguments = Bundle()
+                controller?.arguments?.putSerializable(Screen.SCREEN_ARGUMENTS, arguments)
+
+                return controller
+            }
+
+            override fun exit() {
+                //Not implemented
+            }
+
+            override fun showSystemMessage(message: String?) {
+                //Not implemented
+            }
+
         }
-        if (!dialogRouter.hasRootController()) {
-            dialogRouter.setRoot(RouterTransaction.with(DialogControllerStub(Bundle())));
+
+        ciceroneDialogNavigator = object : MySupportFragmentNavigator(dialogFragmentManager, dialogsContainer) {
+            override fun createFragment(screenKey: String?, data: Any?): Fragment {
+                val arguments = data as DialogArguments
+
+                var controller: Fragment? = null
+
+                when (screenKey?.toInt()) {
+                    Screen.DIALOG_STUB -> {
+                        controller = DialogControllerStub()
+                    }
+                    Screen.DIALOG_MESSAGE -> {
+                        controller = MessageDialogController()
+                    }
+                }
+
+                if (controller != null) {
+                    arguments.controllerTag = screenKey ?: ""
+                    controller?.arguments = Bundle()
+                    controller?.arguments?.putSerializable(Screen.SCREEN_ARGUMENTS, arguments)
+                }
+
+                return controller!!
+            }
+
+            override fun exit() {
+                //Not implemented
+            }
+
+            override fun showSystemMessage(message: String?) {
+                //Not implemented
+            }
+
         }
+
+        router.newRootScreen(Screen.SCREEN_MAIN.toString(), Arguments())
+        dialogRouter.newRootScreen(Screen.DIALOG_STUB.toString(), DialogArguments(""))
     }
 
     fun showScreen(screenId: Int) {
-        this.showScreen(screenId, Arguments());
+        this.showScreen(screenId, Arguments())
     }
 
     fun showScreen(screenId: Int, arguments: Arguments) {
-        this.showScreen(screenId, arguments, FadeChangeHandler(), FadeChangeHandler());
-    }
-
-    fun showScreen(screenId: Int, arguments: Arguments, popChangeHandler: ControllerChangeHandler, pushChangeHandler: ControllerChangeHandler) {
-
-        var bundle = Bundle();
-        var controller: Controller = getRootController(bundle);
-
-        when (screenId) {
-            Screen.SCREEN_MAIN -> {
-                controller = MainController(bundle);
-            }
-            Screen.SCREEN_TEST -> {
-                controller = TestControlle(bundle);
-            }
-        }
-
-        val routerTransaction: RouterTransaction = createScreenTransaction(controller, arguments)
-                .popChangeHandler(popChangeHandler).pushChangeHandler(pushChangeHandler);
-        router.pushController(routerTransaction);
-    }
-
-    private fun createScreenTransaction(controller: Controller, arguments: Arguments): RouterTransaction {
-        arguments.controllerTag = createTag(controller);
-        controller.args.putSerializable(Screen.SCREEN_ARGUMENTS, arguments);
-        return RouterTransaction.with(controller).tag(arguments.controllerTag);
+        screenRouter.navigateTo(screenId.toString(), arguments)
     }
 
     fun showDialog(dialogId: Int, parrentTag: String) {
-        this.showDialog(dialogId, DialogArguments(parrentTag));
+        this.showDialog(dialogId, DialogArguments(parrentTag))
     }
 
     fun showDialog(dialogId: Int, arguments: DialogArguments) {
-        val bundle = Bundle();
+        arguments.controllerTag = dialogId.toString()
+        dialogRouter.navigateTo(dialogId.toString(), arguments)
+    }
 
-        var controller: Controller? = null;
-
-        when (dialogId) {
-            Screen.DIALOG_MESSAGE -> {
-                controller = MessageDialogController(bundle);
+    fun closeDialogByTag(tag: String) {
+        for (i in 0 until dialogFragmentManager.getBackStackEntryCount()) {
+            if (tag == dialogFragmentManager.getBackStackEntryAt(i).getName()) {
+                if (i > 0) {
+                    dialogFragmentManager.popBackStackImmediate(dialogFragmentManager.getBackStackEntryAt(i - 1).getName(), 0)
+                } else {
+                    dialogFragmentManager.popBackStackImmediate()
+                }
+                break
             }
         }
+    }
 
-        if (controller != null) {
-            arguments.controllerTag = createTag(controller);
-            controller.args.putSerializable(Screen.SCREEN_ARGUMENTS, arguments)
+    fun getRootController(bundle: Bundle): Fragment {
+        bundle.putSerializable(Screen.SCREEN_ARGUMENTS, Arguments())
+        val root = MainController()
+        root.setArguments(bundle)
+        return root
+    }
 
-            val routerTransaction: RouterTransaction = RouterTransaction.with(controller)
-                    .tag(arguments.controllerTag)
-                    .popChangeHandler(FadeChangeHandler())
-                    .pushChangeHandler(FadeChangeHandler());
-            dialogRouter.pushController(routerTransaction);
+    fun getControllerByTag(controllerTag: String): Fragment {
+        return getControllerByTag(controllerTag, false)
+    }
+
+    fun getControllerByTag(controllerTag: String, isDialog: Boolean): Fragment  {
+        return if (!isDialog) screenFragmentManager.findFragmentByTag(controllerTag) else dialogFragmentManager.findFragmentByTag(controllerTag)
+    }
+
+    private fun createTag(controller: Fragment): String {
+        return controller.javaClass.simpleName + UUID.randomUUID()
+    }
+
+    fun setNavigators(screenNavigatorHolder: NavigatorHolder, dialogNavigatorHolder: NavigatorHolder) {
+        screenNavigatorHolder.setNavigator(ciceroneNavigator)
+        dialogNavigatorHolder.setNavigator(ciceroneDialogNavigator)
+    }
+
+    fun restoreNavigators(screenNavigatorHolder: NavigatorHolder, dialogNavigatorHolder: NavigatorHolder) {
+        screenNavigatorHolder.removeNavigator()
+        dialogNavigatorHolder.removeNavigator()
+    }
+
+    fun onHandleBack(): Boolean {
+        var result = true
+
+        val lastFragment = getLastFragment(screenFragmentManager)
+        val lastfragmentFragmentManager = lastFragment.childFragmentManager
+
+        if (dialogFragmentManager.backStackEntryCount > 0) {
+            App.INSTANCE.getDialogRouter().exit()
+        } else if ((lastFragment as HandleNavigation).hadleBack() && lastfragmentFragmentManager.backStackEntryCount > 0) {
+            lastfragmentFragmentManager.popBackStackImmediate()
+        } else if (screenFragmentManager.backStackEntryCount > 0) {
+            App.INSTANCE.getScreenRouter().exit()
+        } else {
+            result = false
         }
+
+        return result
     }
 
-    fun closeCurrentDialog(tag: String) {
-        val controller = dialogRouter.getControllerWithTag(tag)
-        if (controller != null) {
-            dialogRouter.popController(controller)
-        }
-    }
-
-    fun getRootController(bundle: Bundle): Controller {
-        bundle.putSerializable(Screen.SCREEN_ARGUMENTS, Arguments());
-        return MainController(bundle);
-    }
-
-    fun getControllerByTag(controllerTag: String): Controller {
-        return router.getControllerWithTag(controllerTag)!!;
-    }
-
-    private fun createTag(controller: Controller): String {
-        return controller.javaClass.simpleName + UUID.randomUUID();
+    private fun getLastFragment (fragmentManager: FragmentManager): Fragment {
+        val fragments = screenFragmentManager.fragments
+        return fragments.get(fragments.size - 1)
     }
 
 }

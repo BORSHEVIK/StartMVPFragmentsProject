@@ -5,6 +5,6 @@ import java.io.Serializable
 
 class MessageDialogArguments(parrentTag: String) : DialogArguments(parrentTag), Serializable {
 
-    var value: String = "";
+    var value: String = ""
 
 }

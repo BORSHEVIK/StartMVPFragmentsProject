@@ -1,23 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity">
 
-    <FrameLayout
+    <android.support.v7.widget.LinearLayoutCompat
+        android:id="@+id/tab_layout"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="65dp">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:src="@drawable/logo"
+            android:layout_marginRight="5dp"
+            android:layout_width="65dp"
+            android:layout_height="match_parent" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            android:text="@string/app_name"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/meny_layout"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+
+
+    <fragment android:name="com.docbackup.app.abs.container.ScreenContainer"
         android:id="@+id/container"
+        android:layout_below="@+id/tab_layout"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
-    <FrameLayout
+    <fragment android:name="com.docbackup.app.abs.container.DialogContainer"
         android:id="@+id/dialogContainer"
+        android:layout_below="@+id/tab_layout"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent" />
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

@@ -16,35 +16,56 @@ import com.docbackup.app.abs.presenter.DataHolder
 import com.docbackup.app.abs.view.BaseView
 import com.docbackup.app.abs.view.ViewHolder
 
-open abstract class BaseDialogController<H: ViewHolder, V: BaseView, D: DataHolder, P: BaseDialogPresenter<L>, A: DialogArguments, L: BaseDialogEventListener> (args: Bundle?) :
-        BaseController<H, V, BaseModel, D, P, A> (args), DialogStatusListener {
-
-    override var cancellable: Boolean = true;
+open abstract class BaseDialogController<H: ViewHolder, V: BaseView, D: DataHolder, P: BaseDialogPresenter<L>, A: DialogArguments, L: BaseDialogEventListener> :
+        BaseController<H, V, BaseModel, D, P, A> () {
 
     override fun createModel(abs: Abs): BaseModel {
-        return BaseModelImpl(this, abs);
+        return BaseModelImpl(this, abs)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-        val view: View = inflater.inflate(R.layout.dialog_container, container, false);
-        view.setOnClickListener{ if(cancellable){
-            abs.getNavigator().closeCurrentDialog(this.javaClass.simpleName);
-        }}
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view: View = inflater.inflate(R.layout.dialog_root_container, container, false)
+        val dialogView = view.findViewById<View>(R.id.dialogView)
         //This line is necessary so that the clicks are not detected on the screen under the dialog.
-        view.findViewById<View>(R.id.dialogView).setOnClickListener {}
-        val containerGroup: ViewGroup = view.findViewById(R.id.container);
-        containerGroup.addView(super.onCreateView(inflater, container))
+        dialogView.setOnClickListener {}
 
-        val titleText = arguments!!.title;
-        if (!titleText.isEmpty()) {
-            val title: TextView = view.findViewById(R.id.title)
-            title.visibility = View.VISIBLE;
-            title.text = titleText;
+        if (fullSizeView()) {
+            dialogView.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+        } else {
+            dialogView.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
+            dialogView.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
         }
 
-        getPresenter().attachEventListener(abs.getControllerEventListnerByTag(arguments!!.parrentTag!!) as L);
+        val padding = view.context.resources.getDimensionPixelSize(dialogViewPaddingResource())
+        view.setPadding(padding, padding, padding, padding)
 
-        return view;
+        val containerGroup: ViewGroup = view.findViewById(R.id.container)
+        containerGroup.addView(super.onCreateView(inflater, container, savedInstanceState))
+
+        val cancelable = arguments?.cancelable.let { true }
+        view.setOnClickListener{ if(cancelable){
+            abs.getNavigator().closeDialogByTag(arguments!!.controllerTag)
+        }}
+
+        val titleText = arguments!!.title
+        if (!titleText.isEmpty()) {
+            val title: TextView = view.findViewById(R.id.title)
+            title.visibility = View.VISIBLE
+            title.text = titleText
+        }
+
+        getPresenter().attachEventListener(abs.getControllerEventListnerByTag(arguments!!.parrentTag!!) as L)
+
+        return view
     }
+
+    open fun fullSizeView(): Boolean {
+        return false
+    }
+
+    open fun dialogViewPaddingResource(): Int {
+        return R.dimen.base_dialog_padding
+    }
+
 
 }

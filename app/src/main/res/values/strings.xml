@@ -1,7 +1,43 @@
 <resources>
-    <string name="app_name">MyConductorMVP</string>
+    <string name="app_name">DocBackup</string>
+
+    <string name="take_photo_button">Take photo</string>
+    <string name="set_name_button">Set name</string>
+    <string name="play_audio_button">Play audio</string>
+    <string name="record_name_button">Record name</string>
+    <string name="show_list_button">Show list</string>
+
+    <string name="image_hint">There could be\n your picture</string>
+
+    <string name="psk_title">PSK</string>
+    <string name="first_name_title">First Name</string>
+    <string name="last_name_title">Last Name</string>
+    <string name="type_title">Type</string>
+    <string name="grade_title">Grade</string>
+    <string name="image_file_title">Image</string>
+    <string name="audio_file_title">Audio</string>
+    <string name="lookup_title">Lookup</string>
+
+    <string name="server_ip">Server IP</string>
+    <string name="remote_folder_name">Remote folder name</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="set_remote_params">Set remote params</string>
+    <string name="launch">Launch</string>
+
+    <string name="fill_all_fields">Fill all fields</string>
+
+    <string name="quote">\"</string>
+
+    <string name="connected">Connected</string>
+    <string name="not_connected">Not connected</string>
+    <string name="no_any_logs">No any logs messages</string>
+
+    <string name="no_acces_to_write_storage">No access to write files</string>
 
     <!-- Permissions -->
     <string name="message_title">Attention</string>
     <string name="camera">If you want to access the camera, then you need to give permission in the settings</string>
+    <string name="write_storage">If you want to save data on the device, you need to grant permission</string>
+    <string name="record_audio">To use this functionality, you must allow audio recording</string>
 </resources>

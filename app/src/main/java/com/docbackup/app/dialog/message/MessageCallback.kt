@@ -4,6 +4,6 @@ import com.docbackup.app.abs.dialog.BaseDialogEventListener
 
 interface MessageCallback : BaseDialogEventListener {
 
-    fun okPressed();
+    fun okPressed()
 
 }

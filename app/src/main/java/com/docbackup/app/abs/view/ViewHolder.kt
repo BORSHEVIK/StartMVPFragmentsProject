@@ -4,9 +4,9 @@ import android.view.View
 
 open abstract class ViewHolder {
 
-    internal val view: View;
+    internal val view: View
 
     constructor(view: View) {
-        this.view = view;
+        this.view = view
     }
 }

@@ -4,6 +4,7 @@ import com.docbackup.app.abs.presenter.DataHolder
 
 class MainControllerDataHolder: DataHolder() {
 
-    var value: Int = 30;
+    var photoPath: String? = null
+    var dockName: String = "Photo"
 
 }

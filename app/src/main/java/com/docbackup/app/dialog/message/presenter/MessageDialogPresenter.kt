@@ -5,6 +5,6 @@ import com.docbackup.app.dialog.message.MessageCallback
 
 interface MessageDialogPresenter : BaseDialogPresenter<MessageCallback> {
 
-    fun okButtonClick();
+    fun okButtonClick()
 
 }

@@ -4,6 +4,6 @@ import com.docbackup.app.abs.presenter.Arguments
 
 class TestArguments : Arguments() {
 
-    var value: Int? = -1;
+    var value: Int? = -1
 
 }

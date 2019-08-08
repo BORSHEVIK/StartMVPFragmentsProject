@@ -17,4 +17,12 @@
         <item name="android:windowBackground">@drawable/background_dialog</item>
     </style>
 
+    <style name="MyKeyboardButtonStyle">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

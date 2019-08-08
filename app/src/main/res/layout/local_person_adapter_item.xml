@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/button_background"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".activity.MainActivity">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/thumbnail"
+        android:layout_weight="0.5"
+        android:layout_width="0dp"
+        android:layout_height="150dp" />
+    
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/play_audio"
+        android:text="@string/play_audio_button"
+        android:textSize="20dp"
+        android:layout_width="200dp"
+        android:layout_height="match_parent" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/date"
+        android:gravity="center"
+        android:textColor="@color/blue"
+        android:textSize="20dp"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:textSize="20dp"
+        android:id="@+id/guid"
+        android:textColor="@color/brown"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:textSize="20dp"
+        android:text="@string/lookup_title"
+        android:id="@+id/lookupButton"
+        android:layout_width="200dp"
+        android:layout_height="match_parent" />
+
+</android.support.v7.widget.LinearLayoutCompat>

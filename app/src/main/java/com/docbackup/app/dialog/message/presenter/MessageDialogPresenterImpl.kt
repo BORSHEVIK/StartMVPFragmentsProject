@@ -1,6 +1,5 @@
 package com.docbackup.app.dialog.message.presenter
 
-import com.docbackup.app.abs.Abs
 import com.docbackup.app.abs.PAbs
 import com.docbackup.app.abs.dialog.presenter.BaseDialogPresenterImlp
 import com.docbackup.app.abs.model.BaseModel
@@ -12,12 +11,12 @@ class MessageDialogPresenterImpl(view: MessageDialogView, model: BaseModel, data
         BaseDialogPresenterImlp<MessageDialogView, BaseModel, DataHolder, MessageDialogArguments, MessageCallback>(view, model, dataHolder, arguments, abs), MessageDialogPresenter {
 
     override fun onResume() {
-        super.onResume();
-        view.setMeessage(arguments.value);
+        super.onResume()
+        view.setMeessage(arguments.value)
     }
 
     override fun okButtonClick() {
-        abs.getNavigator().closeCurrentDialog(getControllerTag());
-        eventListener.okPressed();
+        abs.getNavigator().closeDialogByTag(getControllerTag())
+        eventListener.okPressed()
     }
 }

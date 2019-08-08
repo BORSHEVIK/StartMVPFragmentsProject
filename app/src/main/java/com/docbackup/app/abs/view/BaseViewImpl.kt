@@ -5,12 +5,12 @@ import com.docbackup.app.abs.presenter.BasePresenter
 
 open class BaseViewImpl<V : ViewHolder, P : BasePresenter> : BaseView {
 
-    internal val viewHolder: V;
-    internal val presenterProvider: PresenterProvider<P>;
+    internal val viewHolder: V
+    internal val presenterProvider: PresenterProvider<P>
 
     constructor(viewHolder: V, presenterProvider: PresenterProvider<P>) {
-        this.viewHolder = viewHolder;
-        this.presenterProvider = presenterProvider;
+        this.viewHolder = viewHolder
+        this.presenterProvider = presenterProvider
     }
 
 }

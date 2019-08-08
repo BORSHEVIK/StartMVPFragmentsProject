@@ -3,7 +3,6 @@ package com.docbackup.app.dialog.message
 import android.os.Bundle
 import android.view.View
 import com.docbackup.app.R
-import com.docbackup.app.abs.Abs
 import com.docbackup.app.abs.PAbs
 import com.docbackup.app.abs.dialog.BaseDialogController
 import com.docbackup.app.abs.model.BaseModel
@@ -15,7 +14,7 @@ import com.docbackup.app.dialog.message.view.MessageDialogView
 import com.docbackup.app.dialog.message.view.MessageDialogViewHolder
 import com.docbackup.app.dialog.message.view.MessageDialogViewImpl
 
-class MessageDialogController(args: Bundle?) : BaseDialogController<MessageDialogViewHolder, MessageDialogView, DataHolder, MessageDialogPresenter, MessageDialogArguments, MessageCallback>(args) {
+class MessageDialogController : BaseDialogController<MessageDialogViewHolder, MessageDialogView, DataHolder, MessageDialogPresenter, MessageDialogArguments, MessageCallback>() {
 
     override fun createDataHolder(): DataHolder {
         return DataHolder()

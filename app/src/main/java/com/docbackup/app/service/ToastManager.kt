@@ -1,14 +1,19 @@
 package com.docbackup.app.service
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
-import java.io.Serializable
 
-class ToastManager(applicationContext: Context) : Serializable  {
 
-    private val applicationContext: Context = applicationContext;
+class ToastManager(applicationContext: Context) {
+
+    private val applicationContext: Context = applicationContext
 
     fun showToast(message: String) {
-        Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show();
+
+        Handler(Looper.getMainLooper()).post({
+            Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
+        })
     }
 }

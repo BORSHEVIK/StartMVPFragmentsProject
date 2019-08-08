@@ -8,11 +8,11 @@ class MessageDialogViewImpl : BaseViewImpl<MessageDialogViewHolder, MessageDialo
 
     constructor(messageDialogViewHolder: MessageDialogViewHolder, presenterProvider: PresenterProvider<MessageDialogPresenter>)
             : super(messageDialogViewHolder, presenterProvider) {
-        viewHolder.okButton.setOnClickListener { presenterProvider.getPresenter().okButtonClick() };
+        viewHolder.okButton.setOnClickListener { presenterProvider.getPresenter().okButtonClick() }
     }
 
     override fun setMeessage(message: String) {
-        viewHolder.messageTextView.setText(message);
+        viewHolder.messageTextView.setText(message)
     }
 
 }

@@ -1,17 +1,21 @@
 package com.docbackup.app.screen.testscreen.view
 
 import com.docbackup.app.abs.PresenterProvider
-import com.docbackup.app.abs.presenter.BasePresenter
 import com.docbackup.app.abs.view.BaseViewImpl
+import com.docbackup.app.room.entity.Person
+import com.docbackup.app.screen.testscreen.presenter.TestControllerPresenter
 
-class TestControllerViewImpl : BaseViewImpl<TestControllerViewHolder, BasePresenter>, TestControllerView  {
+class TestControllerViewImpl : BaseViewImpl<TestControllerViewHolder, TestControllerPresenter>, TestControllerView  {
 
-    constructor(myControllerViewHolder: TestControllerViewHolder, presenterProvider: PresenterProvider<BasePresenter>)
+    constructor(myControllerViewHolder: TestControllerViewHolder, presenterProvider: PresenterProvider<TestControllerPresenter>)
             : super(myControllerViewHolder, presenterProvider) {
+
     }
 
-    override fun updateMeessage(message: String) {
-        viewHolder.messageTextView.setText("This is second screen with shared value: " + message);
+    override fun updatePersons(persons: MutableList<Person>) {
+    }
+
+    override fun setProgressVisibility(visible: Boolean) {
     }
 
 }

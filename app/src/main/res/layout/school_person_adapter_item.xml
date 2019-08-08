@@ -1,0 +1,79 @@
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/button_background"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".activity.MainActivity">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/firstName"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/lastName"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/type"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/grade"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/psk"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/id"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/eventCode"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/schoolStudentId"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/school"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/hubld"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"/>
+
+</android.support.v7.widget.LinearLayoutCompat>

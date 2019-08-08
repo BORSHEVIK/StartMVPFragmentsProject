@@ -17,34 +17,34 @@ import com.docbackup.app.screen.mainscreen.view.MainControllerView
 import com.docbackup.app.screen.mainscreen.view.MainControllerViewHolder
 import com.docbackup.app.screen.mainscreen.view.MainControllerViewImpl
 
-class MainController(args: Bundle?) : BaseController<MainControllerViewHolder, MainControllerView, MainControllerModel, MainControllerDataHolder, MainControllerPresenter, Arguments>(args) {
+class MainController : BaseController<MainControllerViewHolder, MainControllerView, MainControllerModel, MainControllerDataHolder, MainControllerPresenter, Arguments>() {
 
     override fun getViewLayoutId(): Int {
-        return R.layout.main_controller;
+        return R.layout.main_controller
     }
 
     override fun createViewHolder(view: View): MainControllerViewHolder {
-        return MainControllerViewHolder(view);
+        return MainControllerViewHolder(view)
     }
 
     override fun createDataHolder(): MainControllerDataHolder {
-        return MainControllerDataHolder();
+        return MainControllerDataHolder()
     }
 
     override fun createView(viewHolder: MainControllerViewHolder): MainControllerView {
-        return MainControllerViewImpl(viewHolder, this);
+        return MainControllerViewImpl(viewHolder, this)
     }
 
     override fun createModel(abs: Abs): MainControllerModel {
-        return MainControllerModelImpl(this, abs);
+        return MainControllerModelImpl(this, abs)
     }
 
     override fun createPresenter(view: MainControllerView, model: MainControllerModel, dataHolder: MainControllerDataHolder, arguments: Arguments, abs: PAbs): MainControllerPresenter {
-        return MainControllerPresenterImpl(view, model, dataHolder, arguments, abs);
+        return MainControllerPresenterImpl(view, model, dataHolder, arguments, abs)
     }
 
     override fun provideEvent(): BaseDialogEventListener {
-        return getPresenter();
+        return getPresenter()
     }
 
 }
