@@ -1,0 +1,9 @@
+<resources>
+
+    <dimen name="base_dialog_padding">50dp</dimen>
+
+    <dimen name="list_of_subject_padding">0dp</dimen>
+
+    <dimen name="lmenu_item_padding">2dp</dimen>
+
+</resources>
