@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/microphone_icon" android:state_selected="true"/>
+    <item>
+        <shape android:color="@color/ripple_color">
+            <shape android:shape="rectangle">
+                <solid android:color="@color/ripple_mask" />
+                <corners android:radius="1dp"/>
+            </shape>
+        </shape>
+    </item>
+
+    <item android:drawable="@drawable/microphone_icon"/>
+</selector>
+
