@@ -1,6 +1,8 @@
 package com.borshevik.mvpfragments.abs
 
 import android.support.multidex.MultiDexApplication
+import com.borshevik.mvpfragments.abs.dialog.presenter.DialogArguments
+import com.borshevik.mvpfragments.abs.presenter.Arguments
 import com.borshevik.mvpfragments.model.SchoolPerson
 import io.reactivex.plugins.RxJavaPlugins
 import ru.terrakok.cicerone.Cicerone
@@ -26,6 +28,9 @@ class App : MultiDexApplication() {
 
         screenRouter = Cicerone.create()
         dialogRouter = Cicerone.create()
+
+        screenRouter.router.newRootScreen(Screen.SCREEN_MAIN.toString(), Arguments())
+        dialogRouter.router.newRootScreen(Screen.DIALOG_STUB.toString(), DialogArguments(""))
 
         debugLogTree = DebugLogTree(applicationContext)
         Timber.plant(debugLogTree)

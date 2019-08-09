@@ -16,6 +16,7 @@ class MainControllerPresenterImpl(view: MainControllerView, model: MainControlle
 
     override fun okPressed() {
         abs.getToastManager().showToast("Dialog Ok Pressed")
+        abs.getNavigator().showScreen(Screen.SCREEN_TEST, TestArguments().apply { value = 1 })
     }
 
     private val URL = "https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/drive&response_type=code&redirect_uri=urn:ietf:wg:oauth:2.0:oob&client_id=342986024446-mgd82vdnqp8i1ukt4o09m07oqfach8ko.apps.googleusercontent.com"

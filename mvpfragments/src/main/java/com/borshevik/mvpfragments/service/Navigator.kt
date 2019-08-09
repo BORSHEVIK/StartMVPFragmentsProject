@@ -98,9 +98,6 @@ class Navigator : Serializable {
             }
 
         }
-
-        router.newRootScreen(Screen.SCREEN_MAIN.toString(), Arguments())
-        dialogRouter.newRootScreen(Screen.DIALOG_STUB.toString(), DialogArguments(""))
     }
 
     fun showScreen(screenId: Int) {
